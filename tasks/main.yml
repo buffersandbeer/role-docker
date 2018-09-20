@@ -1,0 +1,11 @@
+---
+- name: Include OS-specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+ 
+- name: Define standard docker packages
+  set_fact:
+      docker_packages: "{{ __docker_packages | list }}"
+  when: docker_packages is not defined
+
+- name: Include os-specific setup
+  include_tasks: "setup-{{ ansible_os_family }}.yml"
